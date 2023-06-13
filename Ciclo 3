@@ -1,0 +1,54 @@
+import javax.swing.*;
+
+public class IMCCalculator {
+    public static void main(String[] args) {
+        JTextField weightTextField = new JTextField(10);
+        JTextField heightTextField = new JTextField(10);
+        JButton calculateButton = new JButton("Calcular");
+        JLabel resultLabel = new JLabel();
+
+        calculateButton.addActionListener(e -> {
+            try {
+                double weight = Double.parseDouble(weightTextField.getText());
+                double height = Double.parseDouble(heightTextField.getText()) / 100.0;
+                double imc = weight / (height * height);
+                String result;
+
+                if (imc < 17) {
+                    result = "Muito abaixo do peso";
+                } else if (imc < 18.5) {
+                    result = "Abaixo do peso";
+                } else if (imc < 25) {
+                    result = "Peso normal";
+                } else if (imc < 30) {
+                    result = "Acima do peso";
+                } else if (imc < 35) {
+                    result = "Obesidade I";
+                } else if (imc < 40) {
+                    result = "Obesidade II (severa)";
+                } else {
+                    result = "Obesidade III (mórbida)";
+                }
+
+                resultLabel.setText("Resultado: " + result);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Por favor, insira valores válidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("Peso (Kg):"));
+        panel.add(weightTextField);
+        panel.add(new JLabel("Altura (cm):"));
+        panel.add(heightTextField);
+        panel.add(calculateButton);
+        panel.add(resultLabel);
+
+        JFrame frame = new JFrame("Calculadora de IMC");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200);
+        frame.setLocationRelativeTo(null);
+        frame.add(panel);
+        frame.setVisible(true);
+    }
+}
